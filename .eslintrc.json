@@ -1,35 +1,49 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": [
-        "standard-with-typescript",
-        "plugin:react/recommended",
-        "plugin:react-perf/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
-        "prettier"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "standard-with-typescript",
+    "plugin:react/recommended",
+    "plugin:react-perf/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "react-perf",
+    "jsx-a11y"
+  ],
+  "rules": {
+    "@typescript-eslint/space-before-function-paren": "off",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxEOF": 0
+      }
     ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "react-hooks",
-        "react-perf",
-        "jsx-a11y"
+    "react/jsx-newline": [
+      1,
+      {
+        "prevent": true,
+        "allowMultilines": true
+      }
     ],
-    "rules": {
-        "@typescript-eslint/space-before-function-paren": "off",
-        "react/jsx-indent": [
-            2,
-            2,
-            {
-                "checkAttributes": true,
-                "indentLogicalExpressions": true
-            }
-        ]
-    }
+    "react/jsx-indent": [
+      2,
+      2,
+      {
+        "checkAttributes": true,
+        "indentLogicalExpressions": true
+      }
+    ]
+  }
 }
