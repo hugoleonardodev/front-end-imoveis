@@ -8,6 +8,7 @@
         "plugin:react/recommended",
         "plugin:react-perf/recommended",
         "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
         "prettier"
     ],
     "parserOptions": {
@@ -16,8 +17,9 @@
     },
     "plugins": [
         "react",
+        "react-hooks",
         "react-perf",
-        "react-hooks"
+        "jsx-a11y"
     ],
     "rules": {
         "@typescript-eslint/space-before-function-paren": "off",
