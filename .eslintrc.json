@@ -9,7 +9,7 @@
     "plugin:react-perf/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -23,17 +23,17 @@
   ],
   "rules": {
     "@typescript-eslint/space-before-function-paren": "off",
-    "react/jsx-first-prop-new-line": 1,
+    // "react/jsx-first-prop-new-line": 1,
     "react/jsx-closing-bracket-location": [
       1,
       "tag-aligned"
     ],
-    "react/jsx-max-props-per-line": [
-      1,
-      {
-        "maximum": 1
-      }
-    ],
+    // "react/jsx-max-props-per-line": [
+    //   1,
+    //   {
+    //     "maximum": 1
+    //   }
+    // ],
     "no-multiple-empty-lines": [
       "warn",
       {

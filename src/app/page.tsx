@@ -1,8 +1,12 @@
 import React from 'react'
-import SearchBar from '@/components/SearchBar'
+import InputSearch from '@/components/InputSearch'
+import InputRooms from '@/components/InputRooms'
 
 export default function Home(): React.JSX.Element {
   return (
-    <SearchBar />
+    <>
+      <InputSearch />
+      <InputRooms />
+    </>
   )
 }
