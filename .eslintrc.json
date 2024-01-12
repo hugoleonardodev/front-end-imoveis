@@ -23,8 +23,19 @@
   ],
   "rules": {
     "@typescript-eslint/space-before-function-paren": "off",
+    "react/jsx-first-prop-new-line": 1,
+    "react/jsx-closing-bracket-location": [
+      1,
+      "tag-aligned"
+    ],
+    "react/jsx-max-props-per-line": [
+      1,
+      {
+        "maximum": 1
+      }
+    ],
     "no-multiple-empty-lines": [
-      "error",
+      "warn",
       {
         "max": 1,
         "maxEOF": 0
@@ -44,6 +55,10 @@
         "checkAttributes": true,
         "indentLogicalExpressions": true
       }
+    ],
+    "react/jsx-indent-props": [
+      2,
+      2
     ]
   }
 }

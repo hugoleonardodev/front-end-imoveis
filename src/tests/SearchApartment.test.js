@@ -5,10 +5,10 @@ import SearchApartment from '@/controllers/SearchApartment.controller'
 
 describe('SearchApartment Class', () => {
   const cities = new SearchCities(places)
-  const aparts = new SearchApartment(cities.searchCities('ce'), flats)
+  const aparts = new SearchApartment([], flats)
 
   it('can search for flats with 2 rooms by state shortname "CE"', () => {
-    expect(aparts.searchApartments(cities.searchCities('CE')[0].name, 2)).toEqual([
+    expect(aparts.searchApartments(cities.searchCities('CE')[0].name, 2)).toStrictEqual([
       {
         City: 'Fortaleza',
         Title: 'Resort-Style Living in Fortaleza',
