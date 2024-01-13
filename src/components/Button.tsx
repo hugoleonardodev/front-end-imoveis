@@ -1,7 +1,7 @@
 // Button.tsx
 import React from 'react'
 import classNames from 'classnames'
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset'
@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error'
   size?: 'small' | 'medium' | 'large'
-  hasIcon?: string
+  hasIcon?: string | StaticImageData
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   className,
   variant = 'primary',
-  size = 'medium',
+  size,
   hasIcon,
   children,
 }) => {
@@ -33,13 +33,17 @@ const Button: React.FC<ButtonProps> = ({
     'ease-in-out',
     'text-white',
     'font-semibold',
-    'py-2',
+    'h-fit',
     'border',
     {
       'px-2': size === 'small',
       'px-4': size === 'medium',
       'px-6': size === 'large',
+      'py-2': size === 'small',
+      'py-4': size === 'medium',
+      'py-6': size === 'large',
       'rounded-[32px]': rounded,
+      'rounded-[78px]': typeof rounded === 'boolean' && variant === 'warning',
       'bg-purple-700': typeof outlined !== 'boolean' && variant === 'primary',
       'bg-green-500': typeof outlined !== 'boolean' && variant === 'success',
       'bg-orange-500': typeof outlined !== 'boolean' && variant === 'warning',
@@ -55,8 +59,10 @@ const Button: React.FC<ButtonProps> = ({
       'hover:bg-white': typeof outlined !== 'boolean',
       'hover:border-purple-700': typeof outlined !== 'boolean' && (variant === 'primary' || variant === 'secondary'),
       'hover:bg-purple-700': typeof outlined === 'boolean' && (variant === 'primary' || variant === 'secondary'),
+      'hover:bg-orange-700': typeof outlined !== 'boolean' && variant === 'warning',
       'hover:text-purple-700': typeof outlined !== 'boolean' && variant === 'primary',
       'hover:border-orange-500': typeof outlined !== 'boolean' && variant === 'warning',
+      'hover:border-orange-700': typeof outlined !== 'boolean' && variant === 'warning',
       'hover:text-orange-500': typeof outlined !== 'boolean' && variant === 'warning',
       'hover:text-white': typeof outlined === 'boolean' && (variant === 'primary' || variant === 'secondary'),
     },
@@ -65,7 +71,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button type={type} onClick={onClick} className={buttonClasses}>
-      {typeof hasIcon === 'string' ? <Image src={hasIcon} alt={hasIcon} /> : null}
+      {typeof hasIcon !== 'undefined' ? <Image src={hasIcon} alt="button-icon" /> : null}
       {children}
     </button>
   )
