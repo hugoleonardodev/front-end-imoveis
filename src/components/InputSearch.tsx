@@ -4,9 +4,9 @@ import React from 'react'
 import Image from 'next/image'
 import { useDebounce } from '@/hooks'
 import SearchCities from '@/controllers/SearchCities.controller'
-import places from '../data/place.json'
-import LocationNoFill from '../assets/location_no_fill.png'
-import LocationFilled from '../assets/location_filled.png'
+import places from '@/data/place.json'
+import LocationNoFill from '@/assets/location_no_fill.png'
+import LocationFilled from '@/assets/location_filled.png'
 
 const cities = new SearchCities(places)
 

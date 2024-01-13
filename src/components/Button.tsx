@@ -6,9 +6,10 @@ import Image from 'next/image'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset'
   rounded?: boolean
+  outlined?: boolean
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   className?: string
-  variant?: 'outlined' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error'
   size?: 'small' | 'medium' | 'large'
   hasIcon?: string
 }
@@ -16,6 +17,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({
   type = 'button',
   rounded,
+  outlined,
   onClick,
   className,
   variant = 'primary',
@@ -32,22 +34,31 @@ const Button: React.FC<ButtonProps> = ({
     'text-white',
     'font-semibold',
     'py-2',
+    'border',
     {
       'px-2': size === 'small',
       'px-4': size === 'medium',
       'px-6': size === 'large',
       'rounded-[32px]': rounded,
-      'bg-purple-700': variant === 'primary',
-      'bg-green-500': variant === 'success',
-      'bg-orange-500': variant === 'warning',
-      'bg-red-500': variant === 'error',
-      'bg-gray-500': variant === 'secondary',
-      border: variant === 'outlined',
-      'border-purple-700': variant === 'outlined' && variant === 'primary',
-      'border-green-500': variant === 'outlined' && variant === 'success',
-      'border-orange-500': variant === 'outlined' && variant === 'warning',
-      'border-red-500': variant === 'outlined' && variant === 'error',
-      'border-gray-500': variant === 'outlined' && variant === 'secondary',
+      'bg-purple-700': typeof outlined !== 'boolean' && variant === 'primary',
+      'bg-green-500': typeof outlined !== 'boolean' && variant === 'success',
+      'bg-orange-500': typeof outlined !== 'boolean' && variant === 'warning',
+      'bg-red-500': typeof outlined !== 'boolean' && variant === 'error',
+      'bg-gray-500': typeof outlined !== 'boolean' && variant === 'secondary',
+      'border-purple-700': typeof outlined === 'boolean' && variant === 'primary',
+      'border-green-500': typeof outlined === 'boolean' && variant === 'success',
+      'border-orange-500': typeof outlined === 'boolean' && variant === 'warning',
+      'border-red-500': typeof outlined === 'boolean' && variant === 'error',
+      'border-gray-500': typeof outlined === 'boolean' && variant === 'secondary',
+      'text-purple-700': typeof outlined === 'boolean' && variant === 'primary',
+      'text-gray-500': typeof outlined === 'boolean' && variant === 'secondary',
+      'hover:bg-white': typeof outlined !== 'boolean',
+      'hover:border-purple-700': typeof outlined !== 'boolean' && (variant === 'primary' || variant === 'secondary'),
+      'hover:bg-purple-700': typeof outlined === 'boolean' && (variant === 'primary' || variant === 'secondary'),
+      'hover:text-purple-700': typeof outlined !== 'boolean' && variant === 'primary',
+      'hover:border-orange-500': typeof outlined !== 'boolean' && variant === 'warning',
+      'hover:text-orange-500': typeof outlined !== 'boolean' && variant === 'warning',
+      'hover:text-white': typeof outlined === 'boolean' && (variant === 'primary' || variant === 'secondary'),
     },
     className,
   )
