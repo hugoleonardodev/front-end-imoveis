@@ -14,6 +14,8 @@ export default function InputSearch(): React.JSX.Element {
   const [input, setInput] = React.useState('')
   const [citiesOptions, setCitiesOptions] = React.useState<City[]>([])
   const [shouldShowOptions, setShouldShowOptions] = React.useState(false)
+  const [shouldFocus, setShouldFocus] = React.useState(false)
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
   const debouncedValue = useDebounce<string>(input.includes(',') ? '' : input, 1000)
 
   const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,16 +27,53 @@ export default function InputSearch(): React.JSX.Element {
     setShouldShowOptions(false)
   }, [])
 
+  const handleKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log('event.key', event.key)
+    if (event.key === 'Enter' && inputRef.current !== null) {
+      console.log('inputRef.current.parentElement?.classList', inputRef.current.parentElement?.classList)
+      setShouldFocus(true)
+    }
+  }, [])
+
+  const handleSectionClick = React.useCallback(() => {
+    if (inputRef.current !== null) {
+      inputRef.current.focus()
+      inputRef.current.parentElement?.classList.add('shadow')
+      inputRef.current.parentElement?.classList.remove('hover:bg-gray-200')
+    }
+  }, [])
+
   React.useEffect(() => {
-    if (debouncedValue.length > 0) {
+    console.log('debouncedValue', debouncedValue)
+    if (debouncedValue !== '' && debouncedValue.length >= 2) {
       setCitiesOptions(cities.searchCities(debouncedValue))
       setShouldShowOptions(true)
     }
   }, [debouncedValue])
 
+  React.useEffect(() => {
+    if (inputRef.current !== null && input.includes(',')) {
+      inputRef.current.parentElement?.classList.remove('shadow')
+    }
+  }, [input])
+
+  React.useEffect(() => {
+    if (shouldFocus && inputRef.current !== null) {
+      inputRef.current.parentElement?.classList.add('shadow')
+      inputRef.current.parentElement?.classList.remove('hover:bg-gray-200')
+      inputRef.current.focus()
+    }
+  }, [shouldFocus])
+
   return (
-    <section className="flex flex-col items-center justify-between cursor-pointer">
-      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] shadow hover:bg-gray-200">
+    <section
+      className="flex flex-col items-center justify-between cursor-pointer"
+      onClick={handleSectionClick}
+      onKeyDown={handleKeyDown}
+      role="searchbox"
+      tabIndex={0}
+    >
+      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200">
         <div className="left-[62px] top-[14px] absolute text-neutral-700 text-sm font-bold font-['Source Sans Pro'] leading-tight">
           Localização
         </div>
@@ -52,6 +91,8 @@ export default function InputSearch(): React.JSX.Element {
           value={input}
           className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal font-['Source Sans Pro'] leading-normal focus-visible:outline-none"
           placeholder="Qual é a Localização?"
+          ref={inputRef}
+          tabIndex={-1}
         />
       </div>
 
@@ -71,7 +112,7 @@ export default function InputSearch(): React.JSX.Element {
                 value={`${elem.name}, ${elem.state.shortname}`}
                 onClick={handleClickOption}
               >
-                <div className="left-[40px] top-[10px] absolute text-neutral-700 text-sm font-normal font-['Source Sans Pro'] leading-tight tracking-tight">{`${elem.name}, ${elem.state.shortname}`}</div>
+                <div className="left-[40px] top-[10px] absolute text-neutral-700 text-sm font-normal font-['Source Sans Pro'] leading-tight tracking-tight">{`${elem.name}, ${elem.state.name}`}</div>
 
                 <Image
                   src={LocationFilled}

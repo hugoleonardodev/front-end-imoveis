@@ -9,6 +9,7 @@ import SearchWhite from '@/assets/search_white.png'
 export default function InputRooms(): React.JSX.Element {
   const [input, setInput] = React.useState('')
   const [shouldShowOptions, setShouldShowOptions] = React.useState(false)
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
 
   const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     // setInput(Number(event.target.value))
@@ -20,26 +21,40 @@ export default function InputRooms(): React.JSX.Element {
     setInput(event.currentTarget.value)
   }, [])
 
-  const handleClickRooms = React.useCallback(() => {
-    setShouldShowOptions(!shouldShowOptions)
-  }, [shouldShowOptions])
+  // const handleClickRooms = React.useCallback(() => {
+  //   setShouldShowOptions(!shouldShowOptions)
+  // }, [shouldShowOptions])
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      setShouldShowOptions(!shouldShowOptions)
+      if (inputRef.current !== null && event.key === 'Enter') {
+        inputRef.current.focus()
+        inputRef.current.parentElement?.parentElement?.classList.add('shadow')
+        inputRef.current.parentElement?.parentElement?.classList.remove('hover:bg-gray-200')
+        setShouldShowOptions(!shouldShowOptions)
+      }
     },
     [shouldShowOptions],
   )
 
+  const handleSectionClick = React.useCallback(() => {
+    if (inputRef.current !== null) {
+      inputRef.current.focus()
+      inputRef.current.parentElement?.parentElement?.classList.add('shadow')
+      inputRef.current.parentElement?.parentElement?.classList.remove('hover:bg-gray-200')
+      setShouldShowOptions(true)
+    }
+  }, [])
+
   return (
     <div
-      className="flex flex-col items-center justify-between cursor-pointer"
-      onClick={handleClickRooms}
+      className="flex flex-col items-center justify-between cursor-pointer "
+      onClick={handleSectionClick}
       onKeyDown={handleKeyDown}
       role="searchbox"
-      tabIndex={-1}
+      tabIndex={0}
     >
-      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200 shadow flex justify-end items-center">
+      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200 flex justify-end items-center">
         <div className="">
           <div className="flex items-center">
             <label
@@ -64,6 +79,7 @@ export default function InputRooms(): React.JSX.Element {
             className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal font-['Source Sans Pro'] leading-normal focus-visible:outline-none"
             placeholder="Quantos Quartos?"
             readOnly
+            ref={inputRef}
           />
         </div>
 
@@ -77,24 +93,27 @@ export default function InputRooms(): React.JSX.Element {
             Número de Quartos
           </span>
 
-          <li className="flex justify-between items-center relative z-[8] mt-[12px] mr-0 mb-0 ml-[24px]">
-            <Button variant="primary" outlined rounded size="small">
+          <li
+            key="another-key"
+            className="flex justify-between items-center relative z-[8] mt-[12px] mr-0 mb-0 ml-[24px]"
+          >
+            <Button variant="primary" outlined rounded size="small" value="" onClick={handleClickOption}>
               Todos
             </Button>
 
-            <Button variant="secondary" outlined rounded size="small">
+            <Button variant="secondary" outlined rounded size="small" value="1" onClick={handleClickOption}>
               +1
             </Button>
 
-            <Button variant="secondary" outlined rounded size="small">
+            <Button variant="secondary" outlined rounded size="small" value="2" onClick={handleClickOption}>
               +2
             </Button>
 
-            <Button variant="secondary" outlined rounded size="small">
+            <Button variant="secondary" outlined rounded size="small" value="3" onClick={handleClickOption}>
               +3
             </Button>
 
-            <Button variant="secondary" outlined rounded size="small">
+            <Button variant="secondary" outlined rounded size="small" value="4" onClick={handleClickOption}>
               +4
             </Button>
           </li>
@@ -104,6 +123,8 @@ export default function InputRooms(): React.JSX.Element {
               className="w-[300px] h-[57px] relative bg-white hover:bg-gray-100 cursor-pointer"
               value={1}
               onClick={handleClickOption}
+              // tabIndex={-1}
+              // role="tab"
             >
               <div className="left-[40px] top-[10px] absolute text-neutral-700 text-sm font-normal font-['Source Sans Pro'] leading-tight tracking-tight">
                 text
