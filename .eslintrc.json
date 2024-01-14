@@ -23,6 +23,7 @@
   ],
   "rules": {
     "@typescript-eslint/space-before-function-paren": "off",
+    "no-console": "warn",
     // "react/jsx-first-prop-new-line": 1,
     "react/jsx-closing-bracket-location": [
       1,
