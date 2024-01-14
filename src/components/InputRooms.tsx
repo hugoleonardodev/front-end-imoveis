@@ -11,21 +11,32 @@ import DrodpdownTypes from './DropdownTypes'
 const flatTypeOptions = ['Todos']
 
 export default function InputRooms(): React.JSX.Element {
-  const { canSearch, setIsFocusing } = useContextSearch()
+  const { canSearch, isFocusing, setIsFocusing, setNumberOfRooms, setShouldRefresh, shouldRefresh } = useContextSearch()
   const [input, setInput] = React.useState('')
   const [shouldShowOptions, setShouldShowOptions] = React.useState(false)
   const inputRef = React.useRef<HTMLInputElement | null>(null)
 
-  const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value)
-  }, [])
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      event.stopPropagation()
+      setInput(event.target.value)
+      setNumberOfRooms(Number(event.target.value))
+    },
+    [setNumberOfRooms],
+  )
 
-  const handleClickOption = React.useCallback((event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-    setInput(event.currentTarget.value)
-  }, [])
+  const handleClickOption = React.useCallback(
+    (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
+      event.stopPropagation()
+      setInput(event.currentTarget.value)
+      setNumberOfRooms(Number(event.currentTarget.value))
+    },
+    [setNumberOfRooms],
+  )
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
+      event.stopPropagation()
       if (inputRef.current !== null && event.key === 'Enter') {
         inputRef.current.focus()
         inputRef.current.parentElement?.parentElement?.classList.add('shadow')
@@ -38,13 +49,28 @@ export default function InputRooms(): React.JSX.Element {
 
   const handleSectionClick = React.useCallback(() => {
     if (inputRef.current !== null) {
-      inputRef.current.focus()
-      inputRef.current.parentElement?.parentElement?.classList.add('shadow')
-      inputRef.current.parentElement?.parentElement?.classList.remove('hover:bg-gray-200')
-      setShouldShowOptions(true)
+      if (!isFocusing) {
+        inputRef.current.focus()
+        inputRef.current.parentElement?.parentElement?.classList.add('shadow')
+        inputRef.current.parentElement?.parentElement?.classList.remove('hover:bg-gray-200')
+      } else {
+        inputRef.current.parentElement?.parentElement?.classList.remove('shadow')
+        inputRef.current.parentElement?.parentElement?.classList.add('hover:bg-gray-200')
+      }
+      setShouldShowOptions(!shouldShowOptions)
       setIsFocusing(true)
     }
-  }, [setIsFocusing])
+  }, [isFocusing, setIsFocusing, shouldShowOptions])
+
+  const handleSearch = React.useCallback(
+    (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
+      event.stopPropagation()
+      console.log('click')
+      setShouldRefresh(!shouldRefresh)
+      setShouldShowOptions(false)
+    },
+    [shouldRefresh, setShouldRefresh],
+  )
 
   return (
     <div
@@ -89,6 +115,7 @@ export default function InputRooms(): React.JSX.Element {
           rounded
           size="medium"
           className={`mr-2 flex ${canSearch ? 'animate-grow-to-right' : null}`}
+          onClick={handleSearch}
         >
           {canSearch ? <span className="animate-left-to-right text-white ml-1">Buscar</span> : null}
         </Button>

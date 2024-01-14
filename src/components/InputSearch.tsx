@@ -12,7 +12,7 @@ import { useContextSearch } from './ContextSearch'
 const cities = new SearchCities(places)
 
 export default function InputSearch(): React.JSX.Element {
-  const { setCanSearch, setIsFocusing } = useContextSearch()
+  const { setCanSearch, setIsFocusing, setSearchQuery, shouldRefresh } = useContextSearch()
   const [input, setInput] = React.useState('')
   const [citiesOptions, setCitiesOptions] = React.useState<City[]>([])
   const [shouldShowOptions, setShouldShowOptions] = React.useState(false)
@@ -20,21 +20,21 @@ export default function InputSearch(): React.JSX.Element {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const debouncedValue = useDebounce<string>(input.includes(',') ? '' : input, 1000)
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInput(event.target.value)
-      setCanSearch(true)
-    },
-    [setCanSearch],
-  )
+  const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value)
+    // setSearchQuery(event.target.value)
+    // setCanSearch(true)
+  }, [])
 
   const handleClickOption = React.useCallback(
     (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
       setInput(event.currentTarget.value)
+      setSearchQuery(event.currentTarget.value)
+      setCanSearch(true)
       setShouldShowOptions(false)
       setIsFocusing(true)
     },
-    [setIsFocusing],
+    [setCanSearch, setIsFocusing, setSearchQuery],
   )
 
   const handleKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -104,6 +104,7 @@ export default function InputSearch(): React.JSX.Element {
           placeholder="Qual é a Localização?"
           ref={inputRef}
           tabIndex={-1}
+          autoComplete="one-time-code"
         />
       </div>
 

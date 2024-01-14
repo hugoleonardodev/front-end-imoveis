@@ -22,8 +22,14 @@ interface ContextProvider {
 }
 
 interface IContextSearch {
+  searchQuery: string
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+  numberOfRooms: number
+  setNumberOfRooms: React.Dispatch<React.SetStateAction<number>>
   canSearch: boolean
   setCanSearch: React.Dispatch<React.SetStateAction<boolean>>
   isFocusing: boolean
   setIsFocusing: React.Dispatch<React.SetStateAction<boolean>>
+  shouldRefresh: boolean
+  setShouldRefresh: React.Dispatch<React.SetStateAction<boolean>>
 }

@@ -32,28 +32,32 @@ const Carousel: React.FC<CarouselProps> = ({ cards, navigationDots, navigationAr
   console.log('visibleCards', visibleCards)
 
   return (
-    <div>
-      <div className="flex items-center justify-around">
-        {navigationArrows === true ? (
+    <div className="flex flex-col items-center">
+      <div className="flex items-start justify-end">
+        {/* {navigationArrows === true ? (
           <button onClick={handleClickPrev} disabled={currentPage === 0}>
             Prev
           </button>
-        ) : null}
+        ) : null} */}
 
         <div className="flex overflow-hidden ">
           <div className="flex">
             {visibleCards.map((card, index) => (
-              <div key={index} style={{ width: '25%' }}>
-                {card}
-              </div>
+              <div key={index}>{card}</div>
             ))}
           </div>
         </div>
 
         {navigationArrows === true ? (
-          <button onClick={handleClickNext} disabled={currentPage === totalPages - 1}>
-            Next
-          </button>
+          <div className="flex absolute">
+            <button onClick={handleClickPrev} disabled={currentPage === 0} className="cursor-pointer">
+              Prev
+            </button>
+
+            <button onClick={handleClickNext} disabled={currentPage === totalPages - 1} className="cursor-pointer">
+              Next
+            </button>
+          </div>
         ) : null}
       </div>
 
