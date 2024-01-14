@@ -16,3 +16,14 @@ interface Apartment {
   Tags?: string[]
   Price: number
 }
+
+interface ContextProvider {
+  children?: React.ReactNode
+}
+
+interface IContextSearch {
+  canSearch: boolean
+  setCanSearch: React.Dispatch<React.SetStateAction<boolean>>
+  isFocusing: boolean
+  setIsFocusing: React.Dispatch<React.SetStateAction<boolean>>
+}

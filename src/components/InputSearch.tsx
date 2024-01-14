@@ -7,10 +7,12 @@ import SearchCities from '@/controllers/SearchCities.controller'
 import places from '@/data/place.json'
 import LocationNoFill from '@/assets/location_no_fill.png'
 import LocationFilled from '@/assets/location_filled.png'
+import { useContextSearch } from './ContextSearch'
 
 const cities = new SearchCities(places)
 
 export default function InputSearch(): React.JSX.Element {
+  const { setCanSearch, setIsFocusing } = useContextSearch()
   const [input, setInput] = React.useState('')
   const [citiesOptions, setCitiesOptions] = React.useState<City[]>([])
   const [shouldShowOptions, setShouldShowOptions] = React.useState(false)
@@ -18,14 +20,22 @@ export default function InputSearch(): React.JSX.Element {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const debouncedValue = useDebounce<string>(input.includes(',') ? '' : input, 1000)
 
-  const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value)
-  }, [])
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInput(event.target.value)
+      setCanSearch(true)
+    },
+    [setCanSearch],
+  )
 
-  const handleClickOption = React.useCallback((event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-    setInput(event.currentTarget.value)
-    setShouldShowOptions(false)
-  }, [])
+  const handleClickOption = React.useCallback(
+    (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
+      setInput(event.currentTarget.value)
+      setShouldShowOptions(false)
+      setIsFocusing(true)
+    },
+    [setIsFocusing],
+  )
 
   const handleKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
     console.log('event.key', event.key)
@@ -40,8 +50,9 @@ export default function InputSearch(): React.JSX.Element {
       inputRef.current.focus()
       inputRef.current.parentElement?.classList.add('shadow')
       inputRef.current.parentElement?.classList.remove('hover:bg-gray-200')
+      setIsFocusing(true)
     }
-  }, [])
+  }, [setIsFocusing])
 
   React.useEffect(() => {
     console.log('debouncedValue', debouncedValue)
@@ -74,7 +85,7 @@ export default function InputSearch(): React.JSX.Element {
       tabIndex={0}
     >
       <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200">
-        <div className="left-[62px] top-[14px] absolute text-neutral-700 text-sm font-bold font-['Source Sans Pro'] leading-tight">
+        <div className="left-[62px] top-[14px] absolute text-neutral-700 text-sm font-bold leading-tight">
           Localização
         </div>
 
@@ -89,7 +100,7 @@ export default function InputSearch(): React.JSX.Element {
           name="place-search-query"
           onChange={handleChange}
           value={input}
-          className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal font-['Source Sans Pro'] leading-normal focus-visible:outline-none"
+          className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal leading-normal focus-visible:outline-none"
           placeholder="Qual é a Localização?"
           ref={inputRef}
           tabIndex={-1}
@@ -97,8 +108,8 @@ export default function InputSearch(): React.JSX.Element {
       </div>
 
       {shouldShowOptions ? (
-        <ul className="w-[302px] h-[352px] mt-20 pt-3 pb-2 bg-white absolute rounded-2xl flex-col justify-end items-center gap-3 inline-flex">
-          <div className="text-zinc-400 text-sm font-normal font-['Source Sans Pro'] leading-tight">
+        <ul className="max-w-[360px] max-h-[352px] mt-20 pt-3 pb-2 bg-white absolute rounded-2xl flex-col justify-end items-center gap-3 inline-flex">
+          <div className="text-zinc-400 text-sm font-normal leading-tight md:px-6 lg:px-6">
             Busque por cidade, região, bairro ou código
           </div>
 
@@ -112,7 +123,7 @@ export default function InputSearch(): React.JSX.Element {
                 value={`${elem.name}, ${elem.state.shortname}`}
                 onClick={handleClickOption}
               >
-                <div className="left-[40px] top-[10px] absolute text-neutral-700 text-sm font-normal font-['Source Sans Pro'] leading-tight tracking-tight">{`${elem.name}, ${elem.state.name}`}</div>
+                <div className="left-[40px] top-[10px] absolute text-neutral-700 text-sm font-normal leading-tight tracking-tight">{`${elem.name}, ${elem.state.name}`}</div>
 
                 <Image
                   src={LocationFilled}
