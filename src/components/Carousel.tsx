@@ -1,6 +1,9 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
+import ArrowRight from '@/assets/arrow_right.png'
+import ArrowLeftDisabled from '@/assets/arrow_left_disabled.png'
 
 interface CarouselProps {
   cards: React.ReactNode[]
@@ -40,7 +43,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards, navigationDots, navigationAr
           </button>
         ) : null} */}
 
-        <div className="flex overflow-hidden ">
+        <div className="flex overflow-hidden mt-9">
           <div className="flex">
             {visibleCards.map((card, index) => (
               <div key={index}>{card}</div>
@@ -51,11 +54,19 @@ const Carousel: React.FC<CarouselProps> = ({ cards, navigationDots, navigationAr
         {navigationArrows === true ? (
           <div className="flex absolute">
             <button onClick={handleClickPrev} disabled={currentPage === 0} className="cursor-pointer">
-              Prev
+              <Image
+                src={currentPage === 0 ? ArrowLeftDisabled : ArrowRight}
+                alt="previous-buton"
+                className={`${currentPage === 0 ? '' : 'rotate-180'}`}
+              />
             </button>
 
-            <button onClick={handleClickNext} disabled={currentPage === totalPages - 1} className="cursor-pointer">
-              Next
+            <button
+              onClick={handleClickNext}
+              disabled={currentPage === totalPages - 1}
+              className={`mx-2 ${currentPage === totalPages - 1 ? 'rotate-180' : ''}`}
+            >
+              <Image src={currentPage === totalPages - 1 ? ArrowLeftDisabled : ArrowRight} alt="next-buton" />
             </button>
           </div>
         ) : null}
@@ -66,14 +77,12 @@ const Carousel: React.FC<CarouselProps> = ({ cards, navigationDots, navigationAr
           {Array.from({ length: Math.ceil(cards.length / cardsPerPage) }).map((_, index) => (
             <button
               key={index}
-              className={`w-4 h-4 rounded-[50%] bg-gray-500 my-1 cursor-pointer transition-colors ${
-                currentPage === index ? 'bg-black' : ''
+              className={`w-4 h-4 rounded-[50%] bg-gray-300 my-1 cursor-pointer transition-colors mx-1 ${
+                currentPage === index ? 'bg-neutral-600' : ''
               }`}
               value={index}
               onClick={goToPage}
-            >
-              {index}
-            </button>
+            />
           ))}
         </div>
       ) : null}

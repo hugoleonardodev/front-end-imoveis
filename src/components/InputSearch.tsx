@@ -12,7 +12,7 @@ import { useContextSearch } from './ContextSearch'
 const cities = new SearchCities(places)
 
 export default function InputSearch(): React.JSX.Element {
-  const { setCanSearch, setIsFocusing, setSearchQuery, shouldRefresh } = useContextSearch()
+  const { setCanSearch, setIsFocusing, setSearchQuery } = useContextSearch()
   const [input, setInput] = React.useState('')
   const [citiesOptions, setCitiesOptions] = React.useState<City[]>([])
   const [shouldShowOptions, setShouldShowOptions] = React.useState(false)

@@ -124,7 +124,7 @@ export default function InputRooms(): React.JSX.Element {
       </div>
 
       {shouldShowOptions ? (
-        <ul className="max-h-[-webkit-fit-content] mt-20 bg-[#fff] absolute rounded-[16px] overflow-hidden shadow-[0_4px_16px_0_rgba(0,0,0,0.1)] mx-auto my-0">
+        <ul className="max-h-[-webkit-fit-content] mt-20 bg-[#fff] absolute z-20 rounded-[16px] overflow-hidden shadow-[0_4px_16px_0_rgba(0,0,0,0.1)] mx-auto my-0">
           <span className="block h-[20px] text-[14px] font-normal leading-[20px] text-[#393b3c] tracking-0.25px relative text-left whitespace-nowrap z-10 mt-[16px] mr-0 mb-0 ml-[24px]">
             Número de Quartos
           </span>

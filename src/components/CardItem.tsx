@@ -29,11 +29,11 @@ const CardItem: React.FC<CardItemProps> = ({
     setShouldShowHiddenOptions(!shouldShowHddenOptions)
   }, [shouldShowHddenOptions])
 
-  const handleOnFocus = React.useCallback((event: React.FocusEvent<HTMLDivElement, Element>) => {
-    // React.SyntheticEvent<HTMLDivElement, React.FocusEventHandler<HTMLDivElement>)>
-    // event.stopPropagation()
-    // event.preventDefault()
-  }, [])
+  // const handleOnFocus = React.useCallback((event: React.FocusEvent<HTMLDivElement, Element>) => {
+  // React.SyntheticEvent<HTMLDivElement, React.FocusEventHandler<HTMLDivElement>)>
+  // event.stopPropagation()
+  // event.preventDefault()
+  // }, [])
 
   return (
     <div

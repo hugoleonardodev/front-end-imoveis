@@ -1,138 +1,21 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Carousel from './Carousel'
 import CardItem from './CardItem'
 import { useContextSearch } from './ContextSearch'
 import SearchApartment from '@/controllers/SearchApartment.controller'
-import place from '@/data/place.json'
 import flats from '@/data/flats.json'
-
-const cards = [
-  'Card 1',
-  'Card 2',
-  'Card 3',
-  'Card 4',
-  'Card 5',
-  'Card 6',
-  'Card 7',
-  'Card 8',
-  'Card 9',
-  'Card 10',
-  'Card 11',
-  'Card 12',
-  'Card 13',
-]
-const searchResult = [
-  {
-    City: 'Fortaleza',
-    Title: 'Resort-Style Living in Fortaleza',
-    Author: 'Tropical Real Estate',
-    Rooms: 2,
-    Tags: ['elevator', 'furniture', 'parking'],
-    Price: 700000,
-  },
-  {
-    City: 'Fortaleza',
-    Title: 'Cozy Apartment in Fortaleza',
-    Author: 'Comfort Homes',
-    Rooms: 2,
-    Tags: ['furniture', 'parking'],
-    Price: 400000,
-  },
-]
-
-const cardsToRender = [
-  <CardItem
-    key={searchResult[0].Title}
-    title={searchResult[0].Title}
-    city={searchResult[0].City}
-    rooms={searchResult[0].Rooms}
-    price={searchResult[0].Price}
-    tags={searchResult[0].Tags}
-  />,
-  <CardItem
-    key={searchResult[1].Title}
-    title={searchResult[1].Title}
-    city={searchResult[1].City}
-    rooms={searchResult[1].Rooms}
-    price={searchResult[1].Price}
-    tags={searchResult[1].Tags}
-  />,
-  <CardItem
-    key={'11'}
-    title={searchResult[0].Title}
-    city={searchResult[0].City}
-    rooms={searchResult[0].Rooms}
-    price={searchResult[0].Price}
-    tags={searchResult[0].Tags}
-  />,
-  <CardItem
-    key={'12'}
-    title={searchResult[1].Title}
-    city={searchResult[1].City}
-    rooms={searchResult[1].Rooms}
-    price={searchResult[1].Price}
-    tags={searchResult[1].Tags}
-  />,
-  <CardItem
-    key={'13'}
-    title={searchResult[0].Title}
-    city={searchResult[0].City}
-    rooms={searchResult[0].Rooms}
-    price={searchResult[0].Price}
-    tags={searchResult[0].Tags}
-  />,
-  <CardItem
-    key={'14'}
-    title={searchResult[1].Title}
-    city={searchResult[1].City}
-    rooms={searchResult[1].Rooms}
-    price={searchResult[1].Price}
-    tags={searchResult[1].Tags}
-  />,
-  <CardItem
-    key={'15'}
-    title={searchResult[0].Title}
-    city={searchResult[0].City}
-    rooms={searchResult[0].Rooms}
-    price={searchResult[0].Price}
-    tags={searchResult[0].Tags}
-  />,
-  <CardItem
-    key={'16'}
-    title={searchResult[1].Title}
-    city={searchResult[1].City}
-    rooms={searchResult[1].Rooms}
-    price={searchResult[1].Price}
-    tags={searchResult[1].Tags}
-  />,
-  <CardItem
-    key={'17'}
-    title={searchResult[0].Title}
-    city={searchResult[0].City}
-    rooms={searchResult[0].Rooms}
-    price={searchResult[0].Price}
-    tags={searchResult[0].Tags}
-  />,
-  <CardItem
-    key={'18'}
-    title={searchResult[1].Title}
-    city={searchResult[1].City}
-    rooms={searchResult[1].Rooms}
-    price={searchResult[1].Price}
-    tags={searchResult[1].Tags}
-  />,
-]
+import ArrowDownOrange from '@/assets/arrow_down_orange.png'
+import ExternalLink from '@/assets/external_link.png'
 
 const aparts = new SearchApartment(flats)
 
 const ListSearchResults: React.FC = () => {
   const { searchQuery, numberOfRooms, shouldRefresh } = useContextSearch()
   const [searchResults, setSearchResults] = React.useState<Apartment[]>([])
-  // console.log('searchQuery, numberOfRooms', searchQuery, numberOfRooms)
-  // const currentSearch = aparts.searchApartments(searchQuery, numberOfRooms)
-  // console.log('searchResults', searchResults)
+
   const resultsWithCards = searchResults.map((result, index) => (
     <CardItem
       key={`${index}-${result.Title}`}
@@ -163,11 +46,38 @@ const ListSearchResults: React.FC = () => {
     setSearchResults(currentSearch)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldRefresh])
+  return (
+    <div>
+      <div className="ml-[228px]">
+        <div className="flex">
+          <h3 className="text-neutral-700 text-2xl font-bold leading-loose">Novos Anúncios em</h3>
+          <span className="text-sky-900 text-2xl font-bold leading-loose"> </span>
 
-  if (resultsWithCards.length > 0) {
-    return <Carousel cards={resultsWithCards} navigationArrows navigationDots />
-  }
-  return <Carousel cards={defaultValues} navigationArrows navigationDots />
+          <div className="flex ml-2 items-center">
+            <h3 className="text-orange-600 text-2xl font-bold leading-loose flex">
+              <strong className="font-bold">{searchQuery.length > 0 ? searchQuery.split(',')[0] : 'Brasil'}</strong>
+            </h3>
+
+            <Image src={ArrowDownOrange} alt="down-arrow-orange" width={16} height={16} className="h-4" />
+          </div>
+        </div>
+
+        <div className="flex items-center">
+          <a href="localhost:3000" className="flex text-blue-800 text-base font-normal leading-normal">
+            <span>Ver todos os imóveis</span>
+          </a>
+
+          <Image src={ExternalLink} alt="external-link" width={16} height={16} className="h-4" />
+        </div>
+      </div>
+
+      <Carousel
+        cards={resultsWithCards.length > 0 ? resultsWithCards : defaultValues}
+        navigationArrows
+        navigationDots
+      />
+    </div>
+  )
 }
 
 export default ListSearchResults
