@@ -120,6 +120,8 @@ export default function InputRooms(): React.JSX.Element {
             />
           </div>
 
+          {Number(input) > 0 ? <span className="absolute left-6 z-20">+</span> : null}
+
           <input
             name="number-of-rooms"
             onChange={handleChange}
