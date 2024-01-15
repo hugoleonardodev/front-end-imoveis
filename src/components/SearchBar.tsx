@@ -18,7 +18,7 @@ export default function SearchBar(): React.JSX.Element {
           Vende. Aluga. Conecta.
         </h1>
 
-        <div className="lg:flex items-center justify-center bg-white lg:rounded-[78px] lg:shadow lg:mt-10">
+        <div className="xl:flex items-center justify-center bg-white xl:rounded-[78px] xl:shadow xl:mt-10">
           <InputSearch />
           {/* {
             <div

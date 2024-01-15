@@ -14,6 +14,16 @@ pnpm dev
 bun dev
 ```
 
+Link para o aplicativo:
+
+[https://front-end-netimoveis-git-dev-app-final-hugoleonardodev.vercel.app/](https://front-end-netimoveis-git-dev-app-final-hugoleonardodev.vercel.app/)
+
+For TESTING:
+
+```bash
+npm run test
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
@@ -86,3 +96,5 @@ teste unitário para um componente React. Testando o componente Button. Então a
 
 3 - Header flutuante, acredito que seja o Header fixo do Figma. Ou talvez uma animação. Eu segui o Figma. Posso criar uma animação pra ele e apra o Carousel
 também. Usando o TailwindCSS, sem problemas.
+
+![Screenshot](./public/projeto.png)

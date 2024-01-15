@@ -67,12 +67,12 @@ export default function InputRooms(): React.JSX.Element {
 
   const handleSearch = React.useCallback(
     (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-      // event.stopPropagation()
+      event.stopPropagation()
       console.log('click')
       setShouldRefresh(!shouldRefresh)
       setShouldShowOptions(false)
     },
-    [shouldRefresh, setShouldRefresh],
+    [shouldRefresh, setShouldRefresh, setShouldShowOptions],
   )
 
   // const handleClickOutside = React.useCallback(
@@ -119,6 +119,8 @@ export default function InputRooms(): React.JSX.Element {
               unoptimized
             />
           </div>
+
+          {Number(input) > 0 ? <span className="absolute left-6 z-20">+</span> : null}
 
           <input
             name="number-of-rooms"
