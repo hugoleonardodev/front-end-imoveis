@@ -1,26 +1,9 @@
-interface City {
-  name: string
-  state: {
-    name: string
-    shortname: string
-  }
-  placeId: number
-}
-
-interface Apartment {
-  City: string
-  Title: string
-  Rooms: number
-  Tags?: string[]
-  Price: number
-}
-
 export default class SearchApartment {
-  private readonly cities: City[]
+  // private readonly cities: City[]
   private readonly apartments: Apartment[]
 
-  constructor(cities: City[], apartments: Apartment[]) {
-    this.cities = cities
+  constructor(apartments: Apartment[]) {
+    // this.cities = cities
     this.apartments = apartments
   }
 

@@ -1,8 +1,14 @@
 import React from 'react'
-import Client from '@/components/Client'
+import SearchBar from '@/components/SearchBar'
+import ListSearchResults from '@/components/ListSearchResults'
+import Header from '@/components/Header'
 
 export default function Home(): React.JSX.Element {
   return (
-    <Client />
+    <>
+      <Header />
+      <SearchBar />
+      <ListSearchResults />
+    </>
   )
 }

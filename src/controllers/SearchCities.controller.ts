@@ -1,16 +1,3 @@
-// import type City from "@/models/City.models";
-
-interface State {
-  name: string
-  shortname: string
-}
-
-interface City {
-  name: string
-  state: State
-  placeId: number
-}
-
 export default class SearchCities {
   private readonly cities: City[]
 
