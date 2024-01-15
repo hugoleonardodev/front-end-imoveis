@@ -50,6 +50,7 @@ export default function InputSearch(): React.JSX.Element {
       inputRef.current.focus()
       inputRef.current.parentElement?.classList.add('shadow')
       inputRef.current.parentElement?.classList.remove('hover:bg-gray-200')
+      inputRef.current.parentElement?.classList.remove('hover-input')
       setIsFocusing(true)
     }
   }, [setIsFocusing])
@@ -72,9 +73,30 @@ export default function InputSearch(): React.JSX.Element {
     if (shouldFocus && inputRef.current !== null) {
       inputRef.current.parentElement?.classList.add('shadow')
       inputRef.current.parentElement?.classList.remove('hover:bg-gray-200')
+      inputRef.current.parentElement?.classList.remove('hover-input')
       inputRef.current.focus()
     }
   }, [shouldFocus])
+
+  // const handleClickOutside = React.useCallback(
+  //   (event: MouseEvent) => {
+  //     if (inputRef.current !== null && !inputRef.current.contains(event.target as Node)) {
+  //       setIsFocusing(false)
+  //       inputRef.current.parentElement?.classList.remove('shadow')
+  //       inputRef.current.parentElement?.classList.add('hover:bg-gray-200')
+  //       inputRef.current.parentElement?.classList.add('hover-input')
+  //       setShouldShowOptions(false)
+  //     }
+  //   },
+  //   [setIsFocusing],
+  // )
+
+  // React.useEffect(() => {
+  //   document.addEventListener('mousedown', handleClickOutside)
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside)
+  //   }
+  // }, [handleClickOutside])
 
   return (
     <section
@@ -84,7 +106,7 @@ export default function InputSearch(): React.JSX.Element {
       role="searchbox"
       tabIndex={0}
     >
-      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200">
+      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200 hover-input">
         <div className="left-[62px] top-[14px] absolute text-neutral-700 text-sm font-bold leading-tight">
           Localização
         </div>
@@ -100,7 +122,7 @@ export default function InputSearch(): React.JSX.Element {
           name="place-search-query"
           onChange={handleChange}
           value={input}
-          className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal leading-normal focus-visible:outline-none"
+          className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal leading-normal focus-visible:outline-none cursor-pointer"
           placeholder="Qual é a Localização?"
           ref={inputRef}
           tabIndex={-1}
@@ -109,7 +131,10 @@ export default function InputSearch(): React.JSX.Element {
       </div>
 
       {shouldShowOptions ? (
-        <ul className="max-w-[360px] max-h-[352px] mt-20 pt-3 pb-2 bg-white absolute rounded-2xl flex-col justify-end items-center gap-3 inline-flex">
+        <ul
+          // ref={inputRef}
+          className="max-w-[360px] max-h-[352px] mt-20 pt-3 pb-2 bg-white absolute rounded-2xl flex-col justify-end items-center gap-3 inline-flex"
+        >
           <div className="text-zinc-400 text-sm font-normal leading-tight md:px-6 lg:px-6">
             Busque por cidade, região, bairro ou código
           </div>

@@ -18,7 +18,7 @@ export default function InputRooms(): React.JSX.Element {
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      event.stopPropagation()
+      // event.stopPropagation()
       setInput(event.target.value)
       setNumberOfRooms(Number(event.target.value))
     },
@@ -27,7 +27,7 @@ export default function InputRooms(): React.JSX.Element {
 
   const handleClickOption = React.useCallback(
     (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-      event.stopPropagation()
+      // event.stopPropagation()
       setInput(event.currentTarget.value)
       setNumberOfRooms(Number(event.currentTarget.value))
     },
@@ -36,12 +36,13 @@ export default function InputRooms(): React.JSX.Element {
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      event.stopPropagation()
+      // event.stopPropagation()
       if (inputRef.current !== null && event.key === 'Enter') {
         inputRef.current.focus()
         inputRef.current.parentElement?.parentElement?.classList.add('shadow')
         inputRef.current.parentElement?.parentElement?.classList.remove('hover:bg-gray-200')
-        setShouldShowOptions(!shouldShowOptions)
+        inputRef.current.parentElement?.parentElement?.classList.remove('hover-input')
+        setShouldShowOptions(true)
       }
     },
     [shouldShowOptions],
@@ -53,24 +54,45 @@ export default function InputRooms(): React.JSX.Element {
         inputRef.current.focus()
         inputRef.current.parentElement?.parentElement?.classList.add('shadow')
         inputRef.current.parentElement?.parentElement?.classList.remove('hover:bg-gray-200')
+        inputRef.current.parentElement?.parentElement?.classList.remove('hover-input')
       } else {
         inputRef.current.parentElement?.parentElement?.classList.remove('shadow')
         inputRef.current.parentElement?.parentElement?.classList.add('hover:bg-gray-200')
+        inputRef.current.parentElement?.parentElement?.classList.add('hover-input')
       }
-      setShouldShowOptions(!shouldShowOptions)
+      setShouldShowOptions(true)
       setIsFocusing(true)
     }
   }, [isFocusing, setIsFocusing, shouldShowOptions])
 
   const handleSearch = React.useCallback(
     (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-      event.stopPropagation()
+      // event.stopPropagation()
       console.log('click')
       setShouldRefresh(!shouldRefresh)
       setShouldShowOptions(false)
     },
     [shouldRefresh, setShouldRefresh],
   )
+
+  // const handleClickOutside = React.useCallback(
+  //   (event: MouseEvent) => {
+  //     if (inputRef.current !== null && !inputRef.current.contains(event.target as Node)) {
+  //       setIsFocusing(false)
+  //       inputRef.current.parentElement?.parentElement?.classList.remove('shadow')
+  //       inputRef.current.parentElement?.parentElement?.classList.add('hover:bg-gray-200')
+  //       setShouldShowOptions(false)
+  //     }
+  //   },
+  //   [setIsFocusing],
+  // )
+
+  // React.useEffect(() => {
+  //   document.addEventListener('mousedown', handleClickOutside)
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside)
+  //   }
+  // }, [handleClickOutside])
 
   return (
     <div
@@ -80,7 +102,7 @@ export default function InputRooms(): React.JSX.Element {
       role="searchbox"
       tabIndex={0}
     >
-      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200 flex justify-end items-center">
+      <div className="w-[414px] h-[78px] relative bg-white rounded-[78px] hover:bg-gray-200 flex justify-end items-center hover-input">
         <div className="">
           <div className="flex items-center">
             <label
@@ -102,7 +124,7 @@ export default function InputRooms(): React.JSX.Element {
             name="number-of-rooms"
             onChange={handleChange}
             value={input}
-            className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal font-['Source Sans Pro'] leading-normal focus-visible:outline-none"
+            className="left-7 pl-2 top-[40px] absolute text-neutral-700 text-base font-normal font-['Source Sans Pro'] leading-normal focus-visible:outline-none cursor-pointer"
             placeholder="Quantos Quartos?"
             readOnly
             ref={inputRef}
@@ -124,15 +146,12 @@ export default function InputRooms(): React.JSX.Element {
       </div>
 
       {shouldShowOptions ? (
-        <ul className="max-h-[-webkit-fit-content] mt-20 bg-[#fff] absolute z-20 rounded-[16px] overflow-hidden shadow-[0_4px_16px_0_rgba(0,0,0,0.1)] mx-auto my-0">
+        <ul className="mt-20 bg-[#fff] absolute z-20 rounded-[16px] overflow-hidden shadow-[0_4px_16px_0_rgba(0,0,0,0.1)] my-0">
           <span className="block h-[20px] text-[14px] font-normal leading-[20px] text-[#393b3c] tracking-0.25px relative text-left whitespace-nowrap z-10 mt-[16px] mr-0 mb-0 ml-[24px]">
             Número de Quartos
           </span>
 
-          <li
-            key="another-key"
-            className="flex justify-between items-center relative z-[8] mt-[12px] mr-0 mb-0 ml-[24px]"
-          >
+          <li key="another-key" className="flex justify-between items-center relative z-[8] mt-[12px] mx-[24px]">
             {Array.from({ length: 5 }, (v, k) => {
               return k
             }).map(position => {
@@ -154,7 +173,7 @@ export default function InputRooms(): React.JSX.Element {
             })}
           </li>
 
-          <li key={`some-key`} className="self-stretch h-[300px] flex-col justify-start items-center inline-flex">
+          <li key={`some-key`} className="self-stretch flex-col justify-start items-center inline-flex">
             <div className="w-[80%] bg-gray-300 h-[2px] my-2" />
             <DrodpdownTypes options={flatTypeOptions} />
           </li>

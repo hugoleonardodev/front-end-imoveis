@@ -48,10 +48,11 @@ const ListSearchResults: React.FC = () => {
   }, [shouldRefresh])
   return (
     <div>
-      <div className="ml-[228px]">
+      <div className="lg:ml-[280px] lg:mt-[96px]">
         <div className="flex">
           <h3 className="text-neutral-700 text-2xl font-bold leading-loose">Novos Anúncios em</h3>
-          <span className="text-sky-900 text-2xl font-bold leading-loose"> </span>
+
+          {/* <span className="text-sky-900 text-2xl font-bold leading-loose"> </span> */}
 
           <div className="flex ml-2 items-center">
             <h3 className="text-orange-600 text-2xl font-bold leading-loose flex">

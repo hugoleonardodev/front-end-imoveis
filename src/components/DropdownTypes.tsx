@@ -40,7 +40,7 @@ export default function DrodpdownTypes({ options }: DropdownTypesProps): React.J
   }, [options])
 
   return (
-    <section
+    <div
       className="flex flex-col items-center justify-between cursor-pointer"
       onClick={handleSectionClick}
       onKeyDown={handleKeyDown}
@@ -69,15 +69,15 @@ export default function DrodpdownTypes({ options }: DropdownTypesProps): React.J
       </div>
 
       {shouldShowOptions ? (
-        <ul className="max-w-[360px] max-h-[352px] mt-20 pt-3 pb-2 bg-white absolute rounded-2xl flex-col justify-end items-center gap-3 inline-flex z-10">
+        <ul className="mt-2 pt-3 pb-2 bg-white rounded-2xl flex-col justify-end items-center gap-3 inline-flex z-10">
           {options.length > 0 ? (
             options.map((optionValue, index) => (
               <li
                 key={`${index}-${optionValue}`}
-                className="self-stretch h-[300px] flex-col justify-start items-start inline-flex"
+                className="self-stretch flex-col justify-start items-start inline-flex"
               >
                 <button
-                  className="w-[300px] h-[57px] relative bg-white hover:bg-gray-100 cursor-pointer"
+                  className="relative bg-white hover:bg-gray-100 cursor-pointer"
                   value={`${optionValue}`}
                   onClick={handleClickOption}
                 >
@@ -90,6 +90,6 @@ export default function DrodpdownTypes({ options }: DropdownTypesProps): React.J
           )}
         </ul>
       ) : null}
-    </section>
+    </div>
   )
 }

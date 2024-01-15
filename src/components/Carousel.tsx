@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import ArrowRight from '@/assets/arrow_right.png'
 import ArrowLeftDisabled from '@/assets/arrow_left_disabled.png'
+import { useWindowSize } from '@/hooks'
 
 interface CarouselProps {
   cards: React.ReactNode[]
@@ -11,10 +12,23 @@ interface CarouselProps {
   navigationArrows?: boolean
 }
 
+function calculateCardsToShow(screenWidth: number): 4 | 3 | 2 | 1 {
+  if (screenWidth >= 1279) {
+    return 4
+  } else if (screenWidth >= 767) {
+    return 3
+  } else if (screenWidth >= 479) {
+    return 2
+  } else {
+    return 1
+  }
+}
+
 const Carousel: React.FC<CarouselProps> = ({ cards, navigationDots, navigationArrows }) => {
+  const { width } = useWindowSize()
   const [currentPage, setCurrentPage] = React.useState(0)
 
-  const cardsPerPage = 4
+  const cardsPerPage = calculateCardsToShow(width)
   const totalPages = Math.ceil(cards.length / cardsPerPage)
 
   const handleClickNext = React.useCallback(() => {
@@ -37,13 +51,7 @@ const Carousel: React.FC<CarouselProps> = ({ cards, navigationDots, navigationAr
   return (
     <div className="flex flex-col items-center">
       <div className="flex items-start justify-end">
-        {/* {navigationArrows === true ? (
-          <button onClick={handleClickPrev} disabled={currentPage === 0}>
-            Prev
-          </button>
-        ) : null} */}
-
-        <div className="flex overflow-hidden mt-9">
+        <div className="flex overflow-hidden mt-9 xl:min-w-[1216px] lg:min-w-[912px] md:min-w-[608px] sm:min-w-[304px]">
           <div className="flex">
             {visibleCards.map((card, index) => (
               <div key={index}>{card}</div>

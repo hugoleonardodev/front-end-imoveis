@@ -7,7 +7,7 @@ import AppLogo from '@/assets/logo.png'
 
 const Header: React.FC = () => {
   return (
-    <div className="h-16 bg-white flex items-center justify-center fixed w-screen">
+    <div className="h-16 bg-white flex items-center justify-center fixed w-screen z-20">
       <Image className="w-44 h-10" src={AppLogo} alt="https://via.placeholder.com/169x42" />
 
       <div className="flex w-[60vw] justify-between items-center">

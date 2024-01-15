@@ -35,11 +35,10 @@ const config: Config = {
         'grow-to-right': 'grow-to-right 2000ms cubic-bezier(.15,.71,.25,.98) forwards',
       },
       screens: {
-        sm: { max: '767px' },
-        md: { min: '768px', max: '1279px' },
-        lg: { min: '1280px' },
-        // lg: { min: '1280px', max: '1279px' },
-        // xl: { min: '1280px' }
+        sm: { max: '617px' },
+        md: { min: '618px', max: '767px' },
+        lg: { min: '768px', max: '1279px' },
+        xl: { min: '1280px' },
       },
     },
     plugins: [],
