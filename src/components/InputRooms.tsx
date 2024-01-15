@@ -67,12 +67,12 @@ export default function InputRooms(): React.JSX.Element {
 
   const handleSearch = React.useCallback(
     (event: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-      // event.stopPropagation()
+      event.stopPropagation()
       console.log('click')
       setShouldRefresh(!shouldRefresh)
       setShouldShowOptions(false)
     },
-    [shouldRefresh, setShouldRefresh],
+    [shouldRefresh, setShouldRefresh, setShouldShowOptions],
   )
 
   // const handleClickOutside = React.useCallback(
